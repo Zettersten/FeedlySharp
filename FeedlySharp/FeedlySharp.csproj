@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>
+      An HTTP Client that interfaces with Feedly Cloud API. 
+      Millions of users depend on their feedly for inspiration, information, and to feed their passions. But one size does not fit all. 
+      Individuals have different workflows, different habits, and different devices. 
+      In our efforts to evolve feedly from a product to a platform, we have therefore decided to open up the feedly API. 
+      Developers are welcome to deliver new applications, experiences, and innovations via the feedly cloud. 
+      We feel strongly that this will help to accelerate innovation and better serve our users.
+    </Description>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AssemblyName>FeedlySharp</AssemblyName>
+    <PackageId>FeedlySharp</PackageId>
+    <PackageTags>Rest Client;RestClient;REST;Client;JSON;Feedly;WebApi;HttpClient;Core;iOS;Android;UWP</PackageTags>
+    <Owners>Zettersten</Owners>
+    <Authors>Erik Zettersten</Authors>
+    <PackageIconUrl>http://s3.feedly.com/img/partnerapp-description-feedly.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/Zettersten/FeedlySharp</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.10.1" />
+  </ItemGroup>
+</Project>
