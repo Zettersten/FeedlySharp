@@ -8,19 +8,24 @@
       Developers are welcome to deliver new applications, experiences, and innovations via the feedly cloud. 
       We feel strongly that this will help to accelerate innovation and better serve our users.
     </Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <Version>1.0.0</Version>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>FeedlySharp</AssemblyName>
     <PackageId>FeedlySharp</PackageId>
     <PackageTags>Rest Client;RestClient;REST;Client;JSON;Feedly;WebApi;HttpClient;Core;iOS;Android;UWP</PackageTags>
     <Owners>Zettersten</Owners>
     <Authors>Erik Zettersten</Authors>
-    <PackageIconUrl>http://s3.feedly.com/img/partnerapp-description-feedly.png</PackageIconUrl>
+    <PackageIcon>feedly.png</PackageIcon>
     <PackageProjectUrl>https://github.com/Zettersten/FeedlySharp</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="feedly.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.1" />

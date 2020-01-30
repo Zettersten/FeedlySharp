@@ -11,8 +11,6 @@ namespace FeedlySharp
 
         Task<List<Entry>> GetEntry(params string[] ids);
 
-        Task<Entry> CreateEntry(string title, string author, DateTimeOffset published, Summary content, Origin origin, List<Reference> alternate, List<Resource> tags = null, List<string> keywords = null);
-
         Task<Profile> GetProfile();
 
         Task<List<Collection>> GetCollection();

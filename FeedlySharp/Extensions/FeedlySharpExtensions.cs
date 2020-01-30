@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FeedlySharp.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;
@@ -37,6 +38,35 @@ namespace FeedlySharp.Extensions
             response.ThrowIfNotSuccess(logger, url);
 
             return response.Data;
+        }
+
+        public static async Task<T> PostAsync<T>(this FeedlySharpHttpClient client, string url, ILogger logger, object data)
+        {
+            logger.LogDebug($"[{nameof(FeedlySharpHttpClient)} - {nameof(PostAsync)}]: Calling {url}");
+
+            var request = new RestRequest(url, DataFormat.Json);
+            
+            request.AddJsonBody(data);
+
+            var response = await client.ExecutePostAsync<T>(request);
+
+            response.ThrowIfNotSuccess(logger, url);
+
+            return response.Data;
+        }
+
+        public static ServiceCollection AddFeedlySharp(this ServiceCollection services)
+        {
+            services.AddSingleton<IFeedlySharpHttpClient, FeedlySharpHttpClient>();
+
+            return services;
+        }
+
+        public static ServiceCollection AddFeedlySharp(this ServiceCollection services, FeedlyOptions feedlyOptions)
+        {
+            services.AddSingleton<IFeedlySharpHttpClient>(new FeedlySharpHttpClient(feedlyOptions));
+
+            return services;
         }
     }
 }
