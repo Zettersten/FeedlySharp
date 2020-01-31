@@ -15,10 +15,7 @@ variables:
   buildConfiguration: 'Release'
   buildVersion: 1.0.0-build+$(Build.SourceVersion)
   MyRunNumber: '1.0.0-CI-$(Build.BuildNumber)'
-  Counter: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 100)]
+  Counter: $[format('{0:yyyyMMdd}', pipeline.startTime)]
 
 steps:
-
-- script: echo $(Build.BuildNumber) # display MyRunNumber
-- script: echo $(Build.SourceVersion) #display Run Number
 - script: echo $(Counter) #display Run Number
