@@ -25,7 +25,7 @@ steps:
   inputs:
     command: 'build'
     projects: '$(solution)'
-    arguments: '--version-suffix=$(Build.BuildVersion) --nologo --no-restore --configuration=$(buildConfiguration) --verbosity=detailed'
+    arguments: '--version-suffix=%BUILD_BUILDVERSION% --nologo --no-restore --configuration=$(buildConfiguration) --verbosity=detailed'
 
 - task: DotNetCoreCLI@2
   inputs:
