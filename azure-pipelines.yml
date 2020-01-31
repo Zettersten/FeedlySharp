@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  buildVersion: '1.0.$(DayOfYear).$(Rev:r)'
+  buildVersion: "1.0.$(DayOfYear).$(Rev:r)"
 
 steps:
 
