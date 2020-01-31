@@ -14,9 +14,12 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   buildVersion: 1.0.$(Rev:.r)
+  MyRunNumber: '1.0.0-CI-$(Build.BuildNumber)'
 
 steps:
 
+- script: echo $(MyRunNumber) # display MyRunNumber
+- script: echo $(Build.BuildNumber) #display Run Number
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
