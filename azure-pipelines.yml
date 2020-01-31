@@ -20,6 +20,7 @@ steps:
 - powershell: |
     # Using an input-macro:
     Write-Host "This works: $env:BUILDVERSION"
+    Write-Host "This works: $env:DAYOFYEAR"
 
 - task: NuGetToolInstaller@1
 
