@@ -13,9 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  buildVersion: 1.0.0-build+$(Build.SourceVersion)
-  MyRunNumber: '1.0.0-CI-$(Build.BuildNumber)'
-  Counter: $[format('{0:yyyyMMdd}', pipeline.startTime)]
+  buildVersion: 1.0.$[format('{0:dd}', pipeline.startTime)]-build+$(Build.BuildNumber)
 
 steps:
-- script: echo $(Counter) #display Run Number
+- script: echo $(buildVersion) #display Run Number
