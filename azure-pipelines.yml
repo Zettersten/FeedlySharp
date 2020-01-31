@@ -19,7 +19,7 @@ steps:
 
 - powershell: |
     # Using an input-macro:
-    Write-Host "This works: 1.0.$(Date:yyyyMMdd).$(Rev:r)"
+    Write-Host "This works: $env:BUILDVERSION"
 
 - task: NuGetToolInstaller@1
 
