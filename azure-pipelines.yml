@@ -13,14 +13,9 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  buildVersion: "1.0.$(DayOfYear).$(Rev:r)"
+  buildVersion: "1.0.${{variables.DayOfYear}}"
 
 steps:
-
-- powershell: |
-    # Using an input-macro:
-    Write-Host "This works: $env:BUILDVERSION"
-    Write-Host "This works: $env:DAYOFYEAR"
 
 - task: NuGetToolInstaller@1
 
