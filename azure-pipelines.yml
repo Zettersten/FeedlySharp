@@ -19,7 +19,7 @@ steps:
 
 - powershell: |
     # Using an input-macro:
-    Write-Host "This works: 1.0.$(DayOfYear).$(Rev:r)"
+    Write-Host "This works: 1.0.$(Date:yyyyMMdd).$(Rev:r)"
 
 - task: NuGetToolInstaller@1
 
