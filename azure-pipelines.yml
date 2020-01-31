@@ -27,6 +27,11 @@ steps:
     projects: '$(solution)'
     arguments: '--version-suffix=$(Build.BuildVersion) --nologo --no-restore --configuration=$(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '$(solution)'
+
 - task: NuGetCommand@2
   inputs:
     command: 'push'
