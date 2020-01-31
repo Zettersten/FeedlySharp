@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  buildVersion: '1.0.$(DayOfYear).$(Rev:r)'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -25,7 +26,7 @@ steps:
   inputs:
     command: 'build'
     projects: '$(solution)'
-    arguments: '--version-suffix=%BUILD_BUILDVERSION% --nologo --no-restore --configuration=$(buildConfiguration) --verbosity=detailed'
+    arguments: '--nologo --no-restore --configuration=$(buildConfiguration) -p:Version=$(buildVersion)'
 
 - task: DotNetCoreCLI@2
   inputs:
