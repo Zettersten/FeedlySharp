@@ -16,6 +16,11 @@ variables:
   buildVersion: '1.0.$(DayOfYear).$(Rev:r)'
 
 steps:
+
+- powershell: |
+    # Using an input-macro:
+    Write-Host "This works: 1.0.$(DayOfYear).$(Rev:r)"
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
