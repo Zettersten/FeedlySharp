@@ -89,7 +89,7 @@ namespace FeedlySharp
             return this.GetAsync<Stream>("v3/streams/contents" + streamOptions.ToString(), logger);
         }
 
-        public async Task<Stream> GetSaveForLaterStream(StreamOptions streamOptions = null)
+        public Task<Stream> GetSaveForLaterStream(StreamOptions streamOptions = null)
         {
             if (streamOptions == null)
             {
@@ -101,11 +101,10 @@ namespace FeedlySharp
                 streamOptions.Count = 500;
             }
 
-            var profile = await GetProfile();
 
-            streamOptions.StreamId = $"user/{profile.Id}/tag/global.saved";
+            streamOptions.StreamId = $"user/{Options.UserID}/tag/global.saved";
 
-            return await this.GetAsync<Stream>("v3/streams/contents" + streamOptions.ToString(), logger);
+            return this.GetAsync<Stream>("v3/streams/contents" + streamOptions.ToString(), logger);
         }
 
         public async IAsyncEnumerable<Stream> GetStreamAsContiuation(StreamOptions streamOptions = null)
