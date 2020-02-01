@@ -55,14 +55,14 @@ namespace FeedlySharp.Extensions
             return response.Data;
         }
 
-        public static ServiceCollection AddFeedlySharp(this ServiceCollection services)
+        public static IServiceCollection AddFeedlySharp(this IServiceCollection services)
         {
             services.AddSingleton<IFeedlySharpHttpClient, FeedlySharpHttpClient>();
 
             return services;
         }
 
-        public static ServiceCollection AddFeedlySharp(this ServiceCollection services, FeedlyOptions feedlyOptions)
+        public static IServiceCollection AddFeedlySharp(this IServiceCollection services, FeedlyOptions feedlyOptions)
         {
             services.AddSingleton<IFeedlySharpHttpClient>(new FeedlySharpHttpClient(feedlyOptions));
 
