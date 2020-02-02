@@ -23,7 +23,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [Environment]::SetEnvironmentVariable("FEEDLY_VARS", $env:FEEDLYENVVARS, "User")
+      [Environment]::SetEnvironmentVariable("FEEDLY_VARS", $env:FEEDLYENVVARS)
 
 - task: DotNetCoreCLI@2
   inputs:
