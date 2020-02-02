@@ -8,7 +8,7 @@ namespace FeedlySharp.Tests
 {
     public static class Mocks
     {
-        private static string[] EnviromentVariables => Environment.GetEnvironmentVariable("FEEDLY_VARS", EnvironmentVariableTarget.User).Split(';', StringSplitOptions.RemoveEmptyEntries);
+        private static string[] EnviromentVariables => Environment.GetEnvironmentVariable("FEEDLY_VARS").Split(';', StringSplitOptions.RemoveEmptyEntries);
 
         public static FeedlyOptions MockFeedlyOptions => new FeedlyOptions
         {
