@@ -37,6 +37,10 @@ steps:
     script: |
       [Environment]::SetEnvironmentVariable("FEEDLY_VARS", $env:FEEDLYENVVARS)
 
+- task: CmdLine@2
+  inputs:
+    script: 'SET FEEDLY_VARS=$(FeedlyEnvVars)'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
