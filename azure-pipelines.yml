@@ -31,13 +31,6 @@ steps:
     projects: '$(solution)'
     arguments: '--nologo --no-restore --configuration=$(buildConfiguration) -p:Version=$(buildVersion)'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'push'
-    packagesToPush: '**/*.nupkg;!**/*.symbols.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'Nuget.org - Azure DevOps'
-
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
@@ -47,3 +40,10 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '**/*.nupkg;!**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Nuget.org - Azure DevOps'
