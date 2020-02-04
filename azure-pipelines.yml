@@ -18,6 +18,14 @@ variables:
   buildVersion: 1.1.$(Build.BuildId)
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo Hello world
+      
+      echo $(FeedlyEnvVars)
 
 # - task: NuGetToolInstaller@1
 
@@ -29,20 +37,14 @@ steps:
 #   inputs:
 #     command: 'build'
 #     projects: '$(solution)'
-#     arguments: '--nologo --no-restore --configuration=$(buildConfiguration) -p:Version=$(buildVersion)'
-
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo %FEEDLYENVVARS%
-      echo $(FeedlyEnvVars)
-      SET FEEDLY_VARS=$(FeedlyEnvVars)
-      dotnet test $(Build.SourcesDirectory)\FeedlySharp.Tests\FeedlySharp.Tests.csproj --configuration $(BuildConfiguration) --collect "Code Coverage" --logger trx --results-directory $(Agent.TempDirectory)
-
+#     arguments: '--nologo --no-restore --configuration $(buildConfiguration) -p:Version=$(buildVersion)'
 
 # - task: DotNetCoreCLI@2
 #   inputs:
 #     command: 'test'
+#     projects: '$(solution)'
+#     arguments: '--configuration $(buildConfiguration)'
+#     publishTestResults: true
 
 # - task: NuGetCommand@2
 #   inputs:
