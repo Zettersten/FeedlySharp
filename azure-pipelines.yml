@@ -21,11 +21,12 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+    
       echo Write your commands here
-      
       echo Hello world
       
       echo $(FeedlyEnvVars)
+      echo $(FEEDLY_VARS)
 
 # - task: NuGetToolInstaller@1
 
