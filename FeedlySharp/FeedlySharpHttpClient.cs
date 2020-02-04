@@ -42,6 +42,26 @@ namespace FeedlySharp
 
         public FeedlyOptions Options => ((FeedlyAuthenticator)this.Authenticator).Options;
 
+        public Task<Collection> AddPersonalFeedToCollection(string id, string feedId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Collection> AddPersonalFeedToCollection(string id, List<string> feedIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<string>> CreateAndTagEntry(Entry entry)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Collection> CreateCollection(Collection collection)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Collection>> GetCollection()
         {
             return this.GetAsync<List<Collection>>($"v3/collections?withStatus=true", logger);
@@ -57,14 +77,14 @@ namespace FeedlySharp
             return this.GetAsync<Collection>($"v3/collections/{id}?withStatus=true", logger);
         }
 
-        public async Task<Entry> GetEntry(string id)
+        public async Task<Entry> GetEntryContents(string id)
         {
             var result = await this.GetAsync<List<Entry>>($"v3/entries/{id}", logger);
 
             return result.FirstOrDefault();
         }
 
-        public Task<List<Entry>> GetEntry(params string[] ids)
+        public Task<List<Entry>> GetEntryContents(params string[] ids)
         {
             return this.PostAsync<List<Entry>>($"v3/entries/.mget", logger, ids);
         }
@@ -104,6 +124,36 @@ namespace FeedlySharp
 
                 yield return result;
             } while (!string.IsNullOrEmpty(result.Continuation));
+        }
+
+        public Task<StreamId> GetStreamIds(StreamOptions streamOptions = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAsyncEnumerable<StreamId> GetStreamIdsAsContiuation(StreamOptions streamOptions = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Collection> RemovePersonalFeedFromCollection(string id, string feedId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Collection> RemovePersonalFeedFromCollection(string id, List<string> feedIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Collection> UpdateCollectionCover(string id, byte[] cover)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Profile> UpdateProfile(Profile profile)
+        {
+            throw new NotImplementedException();
         }
     }
 }
