@@ -19,31 +19,28 @@ variables:
 
 steps:
 
-# - task: NuGetToolInstaller@1
+- task: NuGetToolInstaller@1
 
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'build'
-#     projects: '$(solution)'
-#     arguments: '--nologo --no-restore --configuration=$(buildConfiguration) -p:Version=$(buildVersion)'
-
-- task: PowerShell@2
+- task: NuGetCommand@2
   inputs:
-    targetType: 'inline'
-    script: |
-      [Environment]::SetEnvironmentVariable("FEEDLY_VARS", $env:FEEDLYENVVARS)
+    restoreSolution: '$(solution)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(solution)'
+    arguments: '--nologo --no-restore --configuration $(buildConfiguration) -p:Version=$(buildVersion)'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
+    projects: '$(solution)'
+    arguments: '--nologo --no-restore --configuration $(buildConfiguration)'
+    publishTestResults: true
 
-# - task: NuGetCommand@2
-#   inputs:
-#     command: 'push'
-#     packagesToPush: '**/*.nupkg;!**/*.symbols.nupkg'
-#     nuGetFeedType: 'external'
-#     publishFeedCredentials: 'Nuget.org - Azure DevOps'
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '**/*.nupkg;!**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'Nuget.org - Azure DevOps'
