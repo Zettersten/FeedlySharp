@@ -34,6 +34,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+      echo %FEEDLYENVVARS%
+      echo $(FeedlyEnvVars)
       SET FEEDLY_VARS=$(FeedlyEnvVars)
       dotnet test $(Build.SourcesDirectory)\FeedlySharp.Tests\FeedlySharp.Tests.csproj --configuration $(BuildConfiguration) --collect "Code Coverage" --logger trx --results-directory $(Agent.TempDirectory)
 
