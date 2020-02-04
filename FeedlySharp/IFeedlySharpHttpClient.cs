@@ -19,11 +19,7 @@ namespace FeedlySharp
 
         Task<Stream> GetStream(StreamOptions streamOptions = null);
 
-        Task<Stream> GetSaveForLaterStream(StreamOptions streamOptions = null);
-
         IAsyncEnumerable<Stream> GetStreamAsContiuation(StreamOptions streamOptions = null);
-
-        IAsyncEnumerable<Stream> GetSaveForLaterStreamAsContinuation(StreamOptions streamOptions = null);
 
         FeedlyOptions Options { get; }
     }

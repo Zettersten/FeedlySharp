@@ -19,7 +19,7 @@ namespace FeedlySharp.Tests
         };
 
         public static IOptions<FeedlyOptions> MockFeedlyIOptions => Options.Create(MockFeedlyOptions);
-
+            
         public static IConfiguration MockFeedlyIConfiguration => new ConfigurationBuilder().AddInMemoryCollection(new List<KeyValuePair<string, string>>
         {
             new KeyValuePair<string, string>($"Feedly:{nameof(FeedlyOptions.AccessToken)}", MockFeedlyOptions.AccessToken),

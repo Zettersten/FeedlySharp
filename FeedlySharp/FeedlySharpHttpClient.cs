@@ -89,24 +89,6 @@ namespace FeedlySharp
             return this.GetAsync<Stream>("v3/streams/contents" + streamOptions.ToString(), logger);
         }
 
-        public Task<Stream> GetSaveForLaterStream(StreamOptions streamOptions = null)
-        {
-            if (streamOptions == null)
-            {
-                streamOptions = new StreamOptions();
-            }
-
-            if (string.IsNullOrEmpty(streamOptions.Continuation))
-            {
-                streamOptions.Count = 500;
-            }
-
-
-            streamOptions.StreamId = $"user/{Options.UserID}/tag/global.saved";
-
-            return this.GetAsync<Stream>("v3/streams/contents" + streamOptions.ToString(), logger);
-        }
-
         public async IAsyncEnumerable<Stream> GetStreamAsContiuation(StreamOptions streamOptions = null)
         {
             Stream result = null;
@@ -119,23 +101,6 @@ namespace FeedlySharp
                 }
 
                 result = await GetStream(streamOptions);
-
-                yield return result;
-            } while (!string.IsNullOrEmpty(result.Continuation));
-        }
-
-        public async IAsyncEnumerable<Stream> GetSaveForLaterStreamAsContinuation(StreamOptions streamOptions = null)
-        {
-            Stream result = null;
-
-            do
-            {
-                if (result != null && !string.IsNullOrEmpty(result.Continuation))
-                {
-                    streamOptions.Continuation = result.Continuation;
-                }
-
-                result = await GetSaveForLaterStream(streamOptions);
 
                 yield return result;
             } while (!string.IsNullOrEmpty(result.Continuation));
