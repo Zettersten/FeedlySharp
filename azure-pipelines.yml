@@ -31,12 +31,12 @@ steps:
     projects: '$(solution)'
     arguments: '--nologo --no-restore --configuration $(buildConfiguration) -p:Version=$(buildVersion)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: '$(solution)'
-    arguments: '--nologo --no-restore --configuration $(buildConfiguration)'
-    publishTestResults: true
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'test'
+#     projects: '$(solution)'
+#     arguments: '--nologo --no-restore --configuration $(buildConfiguration)'
+#     publishTestResults: true
 
 - task: NuGetCommand@2
   inputs:
