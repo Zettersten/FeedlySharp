@@ -30,17 +30,10 @@ steps:
     command: 'build'
     projects: '$(solution)'
     arguments: '--nologo --no-restore --configuration $(buildConfiguration) -p:Version=$(buildVersion)'
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'test'
-#     projects: '$(solution)'
-#     arguments: '--nologo --no-restore --configuration $(buildConfiguration)'
-#     publishTestResults: true
-
+    
 - task: NuGetCommand@2
   inputs:
     command: 'push'
     packagesToPush: '**/*.nupkg;!**/*.symbols.nupkg'
     nuGetFeedType: 'external'
-    publishFeedCredentials: 'Nuget.org - Azure DevOps'
+    publishFeedCredentials: 'Nuget'
