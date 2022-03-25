@@ -128,12 +128,34 @@ namespace FeedlySharp
 
         public Task<StreamId> GetStreamIds(StreamOptions streamOptions = null)
         {
-            throw new NotImplementedException();
+            if (streamOptions == null)
+            {
+                streamOptions = new StreamOptions();
+            }
+
+            if (string.IsNullOrEmpty(streamOptions.Continuation))
+            {
+                streamOptions.Count = 500;
+            }
+
+            return this.GetAsync<StreamId>("v3/streams/ids" + streamOptions.ToString(), logger);
         }
 
-        public IAsyncEnumerable<StreamId> GetStreamIdsAsContiuation(StreamOptions streamOptions = null)
+        public async IAsyncEnumerable<StreamId> GetStreamIdsAsContiuation(StreamOptions streamOptions = null)
         {
-            throw new NotImplementedException();
+            StreamId result = null;
+
+            do
+            {
+                if (result != null && !string.IsNullOrEmpty(result.Continuation))
+                {
+                    streamOptions.Continuation = result.Continuation;
+                }
+
+                result = await GetStreamIds(streamOptions);
+
+                yield return result;
+            } while (!string.IsNullOrEmpty(result.Continuation));
         }
 
         public Task<Collection> RemovePersonalFeedFromCollection(string id, string feedId)
