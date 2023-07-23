@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       An HTTP Client that interfaces with Feedly Cloud API. Millions of users depend on their feedly for inspiration, information, and to feed their passions. But one size does not fit all. Individuals have different workflows, different habits, and different devices. In our efforts to evolve feedly from a product to a platform, we have therefore decided to open up the feedly API. Developers are welcome to deliver new applications, experiences, and innovations via the feedly cloud. We feel strongly that this will help to accelerate innovation and better serve our users.
@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.1" />
-    <PackageReference Include="RestSharp" Version="106.10.1" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
     <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.10.1" />
   </ItemGroup>
 </Project>
