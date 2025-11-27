@@ -1,16 +1,18 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using FeedlySharp.Json;
 using FeedlySharp.Models;
 
 namespace FeedlySharp.Services;
 
 /// <summary>
-/// JSON serialization configuration for Feedly API
+/// JSON serialization configuration for Feedly API with source generation support
 /// </summary>
 public static class FeedlyJsonSerializer
 {
     private static readonly JsonSerializerOptions _options = new()
     {
+        TypeInfoResolver = FeedlyJsonContext.Default,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         PropertyNameCaseInsensitive = true,

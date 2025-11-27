@@ -1,6 +1,8 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using FeedlySharp.Internal;
+using FeedlySharp.Json;
 using FeedlySharp.Models;
 using FeedlySharp.Services;
 using Microsoft.Extensions.Configuration;
@@ -59,7 +61,7 @@ public sealed class FeedlySharpHttpClient : IFeedlySharpHttpClient, IDisposable
         };
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _options.AccessToken);
-        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FeedlySharp/2.0.0");
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"FeedlySharp/3.0.0");
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
@@ -449,7 +451,7 @@ public sealed class FeedlySharpHttpClient : IFeedlySharpHttpClient, IDisposable
         HttpContent? httpContent = null;
         if (content != null)
         {
-            var json = JsonSerializer.Serialize(content, _jsonOptions);
+            var json = JsonSerializerHelper.Serialize(content);
             httpContent = new StringContent(json, Encoding.UTF8, "application/json");
         }
 
@@ -470,7 +472,7 @@ public sealed class FeedlySharpHttpClient : IFeedlySharpHttpClient, IDisposable
             }
             else
             {
-                var json = JsonSerializer.Serialize(content, _jsonOptions);
+                var json = JsonSerializerHelper.Serialize(content);
                 httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             }
         }
@@ -488,7 +490,7 @@ public sealed class FeedlySharpHttpClient : IFeedlySharpHttpClient, IDisposable
         {
             request = new HttpRequestMessage(HttpMethod.Delete, endpoint)
             {
-                Content = new StringContent(JsonSerializer.Serialize(content, _jsonOptions), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonSerializerHelper.Serialize(content), Encoding.UTF8, "application/json")
             };
         }
 
@@ -516,7 +518,7 @@ public sealed class FeedlySharpHttpClient : IFeedlySharpHttpClient, IDisposable
             Error? error = null;
             try
             {
-                error = JsonSerializer.Deserialize<Error>(content, _jsonOptions);
+                error = JsonSerializer.Deserialize(content, FeedlyJsonContext.Default.Error);
             }
             catch
             {
@@ -544,6 +546,7 @@ public sealed class FeedlySharpHttpClient : IFeedlySharpHttpClient, IDisposable
 
         try
         {
+            // Use source-generated context when possible for better performance
             return JsonSerializer.Deserialize<T>(content, _jsonOptions) ?? throw new InvalidOperationException("Deserialization returned null");
         }
         catch (JsonException ex)

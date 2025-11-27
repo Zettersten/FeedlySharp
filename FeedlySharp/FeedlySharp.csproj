@@ -3,11 +3,11 @@
     <Description>
       An HTTP Client that interfaces with Feedly Cloud API. Millions of users depend on their feedly for inspiration, information, and to feed their passions. But one size does not fit all. Individuals have different workflows, different habits, and different devices. In our efforts to evolve feedly from a product to a platform, we have therefore decided to open up the feedly API. Developers are welcome to deliver new applications, experiences, and innovations via the feedly cloud. We feel strongly that this will help to accelerate innovation and better serve our users.
     </Description>
-    <Version>2.0.0</Version>
-    <TargetFramework>net9.0</TargetFramework>
+    <Version>3.0.0</Version>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>FeedlySharp</AssemblyName>
     <PackageId>FeedlySharp</PackageId>
-    <PackageTags>Rest Client;RestClient;REST;Client;JSON;Feedly;WebApi;HttpClient;Core;iOS;Android;UWP</PackageTags>
+    <PackageTags>Rest Client;RestClient;REST;Client;JSON;Feedly;WebApi;HttpClient;Core;iOS;Android;UWP;AOT;NativeAOT</PackageTags>
     <Owners>Zettersten</Owners>
     <Authors>Erik Zettersten</Authors>
     <PackageIcon>feedly.png</PackageIcon>
@@ -19,6 +19,9 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <EnableSGen>true</EnableSGen>
     <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <IsAotCompatible>true</IsAotCompatible>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
   </PropertyGroup>
   <ItemGroup>
     <None Include="feedly.png">
@@ -27,10 +30,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
-    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0" />
+    <PackageReference Include="System.Text.Json" Version="10.0.0" />
+    <PackageReference Include="System.Text.Json.SourceGeneration" Version="10.0.0" />
   </ItemGroup>
 </Project>

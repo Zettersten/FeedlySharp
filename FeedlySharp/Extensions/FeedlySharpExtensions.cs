@@ -14,11 +14,10 @@ public static class FeedlySharpExtensions
     /// </summary>
     public static IServiceCollection AddFeedlySharp(this IServiceCollection services)
     {
-        services.AddHttpClient<IFeedlySharpHttpClient, FeedlySharpHttpClient>();
         services.AddSingleton<IFeedlySharpHttpClient>(sp =>
         {
-            var options = sp.GetRequiredService<IOptions<FeedlyOptions>>();
-            return new FeedlySharpHttpClient(options);
+            var configuration = sp.GetRequiredService<Microsoft.Extensions.Configuration.IConfiguration>();
+            return new FeedlySharpHttpClient(configuration);
         });
 
         return services;
