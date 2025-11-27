@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+namespace FeedlySharp.Models;
 
-namespace FeedlySharp.Models
+/// <summary>
+/// Search term model for priority filters
+/// </summary>
+public record SearchTerm
 {
-    public class SearchTerm
-    {
-        public List<Resource> Parts { get; private set; } = new List<Resource>();
-    }
+    public List<Resource> Parts { get; init; } = [];
 }

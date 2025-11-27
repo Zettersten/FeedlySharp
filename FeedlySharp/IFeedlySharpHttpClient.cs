@@ -1,61 +1,122 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using FeedlySharp.Models;
 
-namespace FeedlySharp
+namespace FeedlySharp;
+
+/// <summary>
+/// Feedly API client interface
+/// </summary>
+public interface IFeedlySharpHttpClient
 {
-    public interface IFeedlySharpHttpClient
-    {
-        #region Entry API (https://developer.feedly.com/v3/entries/)
+    FeedlyOptions Options { get; }
 
-        Task<Entry> GetEntryContents(string id);
+    #region Entry API (https://developer.feedly.com/v3/entries/)
 
-        Task<List<Entry>> GetEntryContents(params string[] ids);
+    Task<Entry?> GetEntryContentsAsync(string id, CancellationToken cancellationToken = default);
+    Task<List<Entry>> GetEntryContentsAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
+    Task<List<string>> CreateAndTagEntryAsync(Entry entry, CancellationToken cancellationToken = default);
 
-        Task<List<string>> CreateAndTagEntry(Entry entry);
+    #endregion Entry API
 
-        #endregion Entry API (https://developer.feedly.com/v3/entries/)
+    #region Profile API (https://developer.feedly.com/v3/profile/)
 
-        #region Profile API (https://developer.feedly.com/v3/profile/)
+    Task<Profile> GetProfileAsync(CancellationToken cancellationToken = default);
+    Task<Profile> UpdateProfileAsync(Profile profile, CancellationToken cancellationToken = default);
 
-        Task<Profile> GetProfile();
+    #endregion Profile API
 
-        Task<Profile> UpdateProfile(Profile profile);
+    #region Collections API (https://developer.feedly.com/v3/collections/)
 
-        #endregion Profile API (https://developer.feedly.com/v3/profile/)
+    Task<List<Collection>> GetCollectionsAsync(CancellationToken cancellationToken = default);
+    Task<Collection> GetCollectionAsync(string id, CancellationToken cancellationToken = default);
+    Task<Collection> CreateCollectionAsync(Collection collection, CancellationToken cancellationToken = default);
+    Task<Collection> UpdateCollectionCoverAsync(string id, byte[] cover, CancellationToken cancellationToken = default);
+    Task<Collection> AddPersonalFeedToCollectionAsync(string id, string feedId, CancellationToken cancellationToken = default);
+    Task<Collection> AddPersonalFeedToCollectionAsync(string id, IEnumerable<string> feedIds, CancellationToken cancellationToken = default);
+    Task<Collection> RemovePersonalFeedFromCollectionAsync(string id, string feedId, CancellationToken cancellationToken = default);
+    Task<Collection> RemovePersonalFeedFromCollectionAsync(string id, IEnumerable<string> feedIds, CancellationToken cancellationToken = default);
+    Task DeleteCollectionAsync(string id, CancellationToken cancellationToken = default);
 
-        #region Collections API (https://developer.feedly.com/v3/collections/)
+    #endregion Collections API
 
-        Task<List<Collection>> GetCollection();
+    #region Stream API (https://developer.feedly.com/v3/streams/)
 
-        Task<Collection> GetCollection(string id);
+    Task<Stream> GetStreamAsync(StreamOptions? streamOptions = null, CancellationToken cancellationToken = default);
+    IAsyncEnumerable<Stream> GetStreamAsContinuationAsync(StreamOptions? streamOptions = null, CancellationToken cancellationToken = default);
+    Task<StreamId> GetStreamIdsAsync(StreamOptions? streamOptions = null, CancellationToken cancellationToken = default);
+    IAsyncEnumerable<StreamId> GetStreamIdsAsContinuationAsync(StreamOptions? streamOptions = null, CancellationToken cancellationToken = default);
 
-        Task<Collection> CreateCollection(Collection collection);
+    #endregion Stream API
 
-        Task<Collection> UpdateCollectionCover(string id, byte[] cover);
+    #region Feed API (https://developer.feedly.com/v3/feeds/)
 
-        Task<Collection> AddPersonalFeedToCollection(string id, string feedId);
+    Task<Feed> GetFeedAsync(string feedId, CancellationToken cancellationToken = default);
+    Task<List<Feed>> GetFeedsAsync(IEnumerable<string> feedIds, CancellationToken cancellationToken = default);
+    Task<FeedMetadata> GetFeedMetadataAsync(string feedId, CancellationToken cancellationToken = default);
 
-        Task<Collection> AddPersonalFeedToCollection(string id, List<string> feedIds);
+    #endregion Feed API
 
-        Task<Collection> RemovePersonalFeedFromCollection(string id, string feedId);
+    #region Marker API (https://developer.feedly.com/v3/markers/)
 
-        Task<Collection> RemovePersonalFeedFromCollection(string id, List<string> feedIds);
+    Task MarkEntriesAsync(Marker marker, CancellationToken cancellationToken = default);
+    Task<List<UnreadCount>> GetUnreadCountsAsync(CancellationToken cancellationToken = default);
+    Task<List<ReadEntry>> GetReadsAsync(string? streamId = null, int? count = null, string? newerThan = null, CancellationToken cancellationToken = default);
 
-        #endregion Collections API (https://developer.feedly.com/v3/collections/)
+    #endregion Marker API
 
-        #region Stream API (https://developer.feedly.com/v3/streams/)
+    #region Mix API (https://developer.feedly.com/v3/mixes/)
 
-        Task<Stream> GetStream(StreamOptions streamOptions = null);
+    Task<Mix> GetMixAsync(string mixId, CancellationToken cancellationToken = default);
+    Task<List<Mix>> GetMixesAsync(CancellationToken cancellationToken = default);
 
-        IAsyncEnumerable<Stream> GetStreamAsContiuation(StreamOptions streamOptions = null);
+    #endregion Mix API
 
-        Task<StreamId> GetStreamIds(StreamOptions streamOptions = null);
+    #region Preference API (https://developer.feedly.com/v3/preferences/)
 
-        IAsyncEnumerable<StreamId> GetStreamIdsAsContiuation(StreamOptions streamOptions = null);
+    Task<List<Preference>> GetPreferencesAsync(CancellationToken cancellationToken = default);
+    Task<Preference> GetPreferenceAsync(string key, CancellationToken cancellationToken = default);
+    Task UpdatePreferencesAsync(List<Preference> preferences, CancellationToken cancellationToken = default);
 
-        #endregion Stream API (https://developer.feedly.com/v3/streams/)
+    #endregion Preference API
 
-        FeedlyOptions Options { get; }
-    }
+    #region Priority API (https://developer.feedly.com/v3/priorities/)
+
+    Task<List<Priority>> GetPrioritiesAsync(CancellationToken cancellationToken = default);
+    Task<Priority> CreatePriorityAsync(Priority priority, CancellationToken cancellationToken = default);
+    Task DeletePriorityAsync(string priorityId, CancellationToken cancellationToken = default);
+
+    #endregion Priority API
+
+    #region Notes & Highlights API (https://developer.feedly.com/v3/notes/)
+
+    Task<Note> CreateNoteAsync(Note note, CancellationToken cancellationToken = default);
+    Task<Note> GetNoteAsync(string entryId, CancellationToken cancellationToken = default);
+    Task DeleteNoteAsync(string entryId, CancellationToken cancellationToken = default);
+
+    #endregion Notes & Highlights API
+
+    #region Tags API (https://developer.feedly.com/v3/tags/)
+
+    Task<List<Tag>> GetTagsAsync(CancellationToken cancellationToken = default);
+    Task<Tag> TagEntryAsync(string entryId, string tagId, CancellationToken cancellationToken = default);
+    Task UntagEntryAsync(string entryId, string tagId, CancellationToken cancellationToken = default);
+    Task ChangeTagLabelAsync(string tagId, string newLabel, CancellationToken cancellationToken = default);
+    Task DeleteTagAsync(string tagId, CancellationToken cancellationToken = default);
+
+    #endregion Tags API
+
+    #region Subscriptions API (https://developer.feedly.com/v3/subscriptions/)
+
+    Task<List<Subscription>> GetSubscriptionsAsync(CancellationToken cancellationToken = default);
+    Task<Subscription> SubscribeToFeedAsync(string feedId, List<string>? categoryIds = null, CancellationToken cancellationToken = default);
+    Task UpdateSubscriptionAsync(Subscription subscription, CancellationToken cancellationToken = default);
+    Task UnsubscribeFromFeedAsync(string feedId, CancellationToken cancellationToken = default);
+
+    #endregion Subscriptions API
+
+    #region Search API (https://developer.feedly.com/v3/search/)
+
+    Task<SearchResult> SearchFeedsAsync(SearchOptions options, CancellationToken cancellationToken = default);
+    Task<SearchResult> SearchFeedsAsync(string query, int count = 20, string? locale = null, CancellationToken cancellationToken = default);
+
+    #endregion Search API
 }

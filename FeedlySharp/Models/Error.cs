@@ -1,16 +1,13 @@
-﻿namespace FeedlySharp.Models
+namespace FeedlySharp.Models;
+
+/// <summary>
+/// Feedly API error response model
+/// </summary>
+public record Error
 {
-    public class Error
-    {
-        public int ErrorCode { get; set; }
+    public required int ErrorCode { get; init; }
+    public required string ErrorId { get; init; }
+    public required string ErrorMessage { get; init; }
 
-        public string ErrorId { get; set; }
-
-        public string ErrorMessage { get; set; }
-
-        public override string ToString()
-        {
-            return $"[{nameof(FeedlySharpHttpClient)} - Error ({ErrorCode})]: {ErrorId} - {ErrorMessage}";
-        }
-    }
+    public override string ToString() => $"[FeedlySharpHttpClient - Error ({ErrorCode})]: {ErrorId} - {ErrorMessage}";
 }

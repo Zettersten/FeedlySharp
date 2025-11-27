@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
+namespace FeedlySharp.Models;
 
-namespace FeedlySharp.Models
+/// <summary>
+/// Collection model representing a user's feed collection
+/// </summary>
+public record Collection : Resource
 {
-    public class Collection : Resource
-    {
-        public bool Customizable { get; set; }
-
-        public bool Enterprise { get; set; }
-
-        public int NumFeeds { get; set; }
-
-        public List<Feed> Feeds { get; private set; } = new List<Feed>();
-    }
+    public bool Customizable { get; init; }
+    public bool Enterprise { get; init; }
+    public int NumFeeds { get; init; }
+    public List<Feed> Feeds { get; init; } = [];
 }

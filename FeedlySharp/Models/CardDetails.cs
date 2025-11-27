@@ -1,17 +1,14 @@
-﻿namespace FeedlySharp.Models
+namespace FeedlySharp.Models;
+
+/// <summary>
+/// Credit card details model
+/// </summary>
+public record CardDetails
 {
-    public class CardDetails
-    {
-        public string Brand { get; set; }
-
-        public string Last4 { get; set; }
-
-        public string NameOnCard { get; set; }
-
-        public int ExpirationMonth { get; set; }
-
-        public int ExpirationYear { get; set; }
-
-        public string Country { get; set; }
-    }
+    public string? Brand { get; init; }
+    public string? Last4 { get; init; }
+    public string? NameOnCard { get; init; }
+    public int ExpirationMonth { get; init; }
+    public int ExpirationYear { get; init; }
+    public string? Country { get; init; }
 }

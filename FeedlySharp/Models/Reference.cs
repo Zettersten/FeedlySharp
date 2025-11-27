@@ -1,9 +1,10 @@
-﻿namespace FeedlySharp.Models
-{
-    public class Reference
-    {
-        public string Href { get; set; }
+namespace FeedlySharp.Models;
 
-        public string Type { get; set; }
-    }
+/// <summary>
+/// Reference link model
+/// </summary>
+public record Reference
+{
+    public required string Href { get; init; }
+    public string? Type { get; init; }
 }

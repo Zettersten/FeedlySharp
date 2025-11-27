@@ -1,15 +1,13 @@
-﻿namespace FeedlySharp.Models
+namespace FeedlySharp.Models;
+
+/// <summary>
+/// Login provider information
+/// </summary>
+public record Login : Resource
 {
-    public class Login : Resource
-    {
-        public bool Verified { get; set; }
-
-        public string Picture { get; set; }
-
-        public string Provider { get; set; }
-
-        public string ProviderId { get; set; }
-
-        public string FullName { get; set; }
-    }
+    public bool Verified { get; init; }
+    public string? Picture { get; init; }
+    public string? Provider { get; init; }
+    public string? ProviderId { get; init; }
+    public string? FullName { get; init; }
 }

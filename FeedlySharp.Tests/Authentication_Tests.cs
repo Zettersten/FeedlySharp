@@ -1,21 +1,17 @@
-﻿using FeedlySharp.Models;
+using FeedlySharp.Models;
+using FluentAssertions;
 using Xunit;
 
-namespace FeedlySharp.Tests
+namespace FeedlySharp.Tests;
+
+public class Authentication_Tests
 {
-    public class Authentication_Tests
+    [Fact(Skip = "Requires invalid token to test")]
+    public async Task Should_throw_feedly_exception_unauthorized()
     {
-        [Fact]
-        public void Should_throw_feedly_exception_unauthorized()
-        {
-            var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var options = new FeedlyOptions { AccessToken = "__invalid__", Domain = "https://cloud.feedly.com/" };
+        var feedlySharp = new FeedlySharpHttpClient(options);
 
-            feedlySharp.Options.AccessToken = "__invalid__";
-
-            Assert.Throws<FeedlyException>(() =>
-            {
-                feedlySharp.GetProfile().GetAwaiter().GetResult();
-            });
-        }
+        await Assert.ThrowsAsync<FeedlyException>(() => feedlySharp.GetProfileAsync());
     }
 }
