@@ -32,4 +32,40 @@ public class Subscription_Tests
         var feedlySharp = Mocks.MockFeedlyHttpClient;
         await feedlySharp.UnsubscribeFromFeedAsync(TestFeedId);
     }
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_subscribe_with_categories()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var categories = new List<string> { "category-id-1", "category-id-2" };
+        var subscription = await feedlySharp.SubscribeToFeedAsync(TestFeedId, categories);
+
+        subscription.Should().NotBeNull();
+        subscription.Id.Should().Be(TestFeedId);
+    }
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_update_subscription()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var subscription = new Subscription
+        {
+            Id = TestFeedId,
+            Title = "Updated Title",
+            Categories = ["category-id"]
+        };
+
+        var updated = await feedlySharp.UpdateSubscriptionAsync(subscription);
+
+        updated.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task Should_throw_when_feed_id_is_null_for_unsubscribe()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+
+        await Assert.ThrowsAsync<ArgumentException>(() => 
+            feedlySharp.UnsubscribeFromFeedAsync(null!));
+    }
 }

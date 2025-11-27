@@ -40,6 +40,31 @@ public class Entry_Tests
     {
         var feedlySharp = Mocks.MockFeedlyHttpClient;
 
-        await Assert.ThrowsAsync<ArgumentNullException>(() => feedlySharp.GetEntryContentsAsync(null!));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => feedlySharp.GetEntryContentsAsync((IEnumerable<string>)null!));
+    }
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_create_and_tag_entry()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var entry = new Entry
+        {
+            Id = "entry-id",
+            Title = "Test Entry",
+            Published = DateTimeOffset.UtcNow,
+            Crawled = DateTimeOffset.UtcNow
+        };
+
+        var tags = await feedlySharp.CreateAndTagEntryAsync(entry);
+
+        tags.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task Should_throw_when_entry_is_null_for_create()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+
+        await Assert.ThrowsAsync<ArgumentNullException>(() => feedlySharp.CreateAndTagEntryAsync(null!));
     }
 }

@@ -42,6 +42,7 @@ namespace FeedlySharp.Json;
 [JsonSerializable(typeof(List<Subscription>))]
 [JsonSerializable(typeof(SearchResult))]
 [JsonSerializable(typeof(SearchOptions))]
+[JsonSerializable(typeof(StreamOptions))]
 [JsonSerializable(typeof(Error))]
 [JsonSerializable(typeof(Resource))]
 [JsonSerializable(typeof(List<Resource>))]

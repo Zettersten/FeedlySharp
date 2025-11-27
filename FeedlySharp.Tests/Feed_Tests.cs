@@ -36,4 +36,13 @@ public class Feed_Tests
         metadata.Should().NotBeNull();
         metadata.FeedId.Should().Be(TestFeedId);
     }
+
+    [Fact]
+    public async Task Should_throw_when_feed_id_is_null_for_metadata()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+
+        await Assert.ThrowsAsync<ArgumentException>(() => 
+            feedlySharp.GetFeedMetadataAsync(null!));
+    }
 }
