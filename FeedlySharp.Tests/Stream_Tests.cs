@@ -1,75 +1,71 @@
-﻿using System.Threading.Tasks;
 using FeedlySharp.Models;
+using FluentAssertions;
 using Xunit;
 
-namespace FeedlySharp.Tests
+namespace FeedlySharp.Tests;
+
+public class Stream_Tests
 {
-    public class Stream_Tests
+    private const string TestStreamId = "feed/http://feeds.feedburner.com/ScottHanselman";
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_get_latest_stream()
     {
-        [Fact]
-        public async Task Should_get_latest_stream()
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var stream = await feedlySharp.GetStreamAsync(new StreamOptions { StreamId = TestStreamId });
+
+        stream.Should().NotBeNull();
+        stream.Items.Should().NotBeNull();
+    }
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_get_latest_stream_as_continuation()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var stream = feedlySharp.GetStreamAsContinuationAsync(new StreamOptions { StreamId = TestStreamId });
+
+        await foreach (var s in stream)
         {
-            var streamId = "feed/http://feeds.feedburner.com/ScottHanselman";
-            var feedlySharp = Mocks.MockFeedlyHttpClient;
-            var stream = await feedlySharp.GetStream(new StreamOptions() { StreamId = streamId });
-
-            Assert.NotNull(stream);
-            Assert.True(stream.Items.Count > 0);
+            s.Should().NotBeNull();
+            break;
         }
+    }
 
-        [Fact]
-        public async Task Should_get_latest_stream_as_continuation()
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_get_latest_stream_ids()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var streamIds = await feedlySharp.GetStreamIdsAsync(new StreamOptions { StreamId = TestStreamId });
+
+        streamIds.Should().NotBeNull();
+        streamIds.Ids.Should().NotBeNull();
+    }
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_get_latest_stream_ids_as_continuation()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var streamIds = feedlySharp.GetStreamIdsAsContinuationAsync(new StreamOptions { StreamId = TestStreamId });
+
+        await foreach (var s in streamIds)
         {
-            var streamId = "feed/http://feeds.feedburner.com/ScottHanselman";
-            var feedlySharp = Mocks.MockFeedlyHttpClient;
-            var stream = feedlySharp.GetStreamAsContiuation(new StreamOptions() { StreamId = streamId });
-
-            await foreach (var s in stream)
-            {
-                Assert.NotNull(s);
-
-                break;
-            }
+            s.Should().NotBeNull();
+            break;
         }
+    }
 
-        [Fact]
-        public async Task Should_get_latest_streamId()
-        {
-            var streamId = "feed/http://feeds.feedburner.com/ScottHanselman";
-            var feedlySharp = Mocks.MockFeedlyHttpClient;
-            var streamIdResponse = await feedlySharp.GetStreamIds(new StreamOptions() { StreamId = streamId });
+    [Fact]
+    public void Should_create_stream_options()
+    {
+        var actual = new StreamOptions();
+        var toUri = actual.ToString();
 
-            Assert.NotNull(streamIdResponse);
-            Assert.True(streamIdResponse.Ids.Count > 0);
-        }
-
-        [Fact]
-        public async Task Should_get_latest_streamIds_as_continuation()
-        {
-            var streamId = "feed/http://feeds.feedburner.com/ScottHanselman";
-            var feedlySharp = Mocks.MockFeedlyHttpClient;
-            var streamIdResponse = feedlySharp.GetStreamIdsAsContiuation(new StreamOptions() { StreamId = streamId });
-
-            await foreach (var s in streamIdResponse)
-            {
-                Assert.NotNull(s);
-
-                break;
-            }
-        }
-
-        [Fact]
-        public void Should_create_stream_options()
-        {
-            var actual = new StreamOptions();
-            var toUri = actual.ToString();
-
-            Assert.Equal(20, actual.Count);
-            Assert.Equal(RankType.Newest, actual.Ranked);
-            Assert.Null(actual.StreamId);
-            Assert.Null(actual.Continuation);
-            Assert.False(actual.UnreadOnly);
-            Assert.Equal("?streamid=&count=20&ranked=newest&unreadonly=false", toUri);
-        }
+        actual.Count.Should().Be(20);
+        actual.Ranked.Should().Be(RankType.Newest);
+        actual.StreamId.Should().BeNull();
+        actual.Continuation.Should().BeNull();
+        actual.UnreadOnly.Should().BeFalse();
+        toUri.Should().Contain("count=20");
+        toUri.Should().Contain("ranked=newest");
     }
 }

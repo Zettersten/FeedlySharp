@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
+namespace FeedlySharp.Models;
 
-namespace FeedlySharp.Models
+/// <summary>
+/// Stream of entries model
+/// </summary>
+public record Stream : Resource
 {
-    public class Stream : Resource
-    {
-        public string Continuation { get; set; }
+    public string? Continuation { get; init; }
+    public List<Entry> Items { get; init; } = [];
+}
 
-        public List<Entry> Items { get; private set; } = new List<Entry>();
-    }
-
-    public class StreamId : Resource
-    {
-        public string Continuation { get; set; }
-
-        public List<string> Ids { get; private set; } = new List<string>();
-    }
+/// <summary>
+/// Stream of entry IDs model
+/// </summary>
+public record StreamId : Resource
+{
+    public string? Continuation { get; init; }
+    public List<string> Ids { get; init; } = [];
 }

@@ -1,9 +1,10 @@
-﻿namespace FeedlySharp.Models
-{
-    public class Resource
-    {
-        public string Id { get; set; }
+namespace FeedlySharp.Models;
 
-        public string Label { get; set; }
-    }
+/// <summary>
+/// Base resource model with id and label
+/// </summary>
+public record Resource
+{
+    public required string Id { get; init; }
+    public string? Label { get; init; }
 }

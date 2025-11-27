@@ -1,17 +1,29 @@
-﻿using Xunit;
+using FluentAssertions;
+using Xunit;
 
-namespace FeedlySharp.Tests
+namespace FeedlySharp.Tests;
+
+public class Profile_Tests
 {
-    public class Profile_Tests
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_get_current_profile()
     {
-        [Fact]
-        public void Should_get_current_profile()
-        {
-            var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
 
-            var profile = feedlySharp.GetProfile().GetAwaiter().GetResult();
+        var profile = await feedlySharp.GetProfileAsync();
 
-            Assert.NotNull(profile);
-        }
+        profile.Should().NotBeNull();
+        profile.Id.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact(Skip = "Requires valid API credentials")]
+    public async Task Should_update_profile()
+    {
+        var feedlySharp = Mocks.MockFeedlyHttpClient;
+        var currentProfile = await feedlySharp.GetProfileAsync();
+
+        var updatedProfile = await feedlySharp.UpdateProfileAsync(currentProfile);
+
+        updatedProfile.Should().NotBeNull();
     }
 }

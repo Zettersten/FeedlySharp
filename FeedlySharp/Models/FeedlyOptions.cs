@@ -1,26 +1,25 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 
-namespace FeedlySharp.Models
+namespace FeedlySharp.Models;
+
+/// <summary>
+/// Configuration options for Feedly API client
+/// </summary>
+public record FeedlyOptions
 {
-    public class FeedlyOptions
+    public required string AccessToken { get; init; }
+    public string? RefreshToken { get; init; }
+    public string? UserID { get; init; }
+    public string Domain { get; init; } = "https://cloud.feedly.com/";
+
+    public static IOptions<FeedlyOptions> Create(string accessToken, string? refreshToken = null, string? userId = null, string domain = "https://cloud.feedly.com/")
     {
-        public string AccessToken { get; set; }
-
-        public string RefreshToken { get; set; }
-
-        public string UserID { get; set; }
-
-        public string Domain { get; set; } = "https://cloud.feedly.com/";
-
-        public static IOptions<FeedlyOptions> Create(string accessToken, string refreshToken, string userId, string domain = "https://cloud.feedly.com/")
+        return Options.Create(new FeedlyOptions
         {
-            return Options.Create(new FeedlyOptions
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                UserID = userId,
-                Domain = domain
-            });
-        }
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            UserID = userId,
+            Domain = domain
+        });
     }
 }

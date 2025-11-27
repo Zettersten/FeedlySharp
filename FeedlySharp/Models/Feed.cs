@@ -1,52 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+namespace FeedlySharp.Models;
 
-namespace FeedlySharp.Models
+/// <summary>
+/// Feed information model
+/// </summary>
+public record Feed : Resource
 {
-    public class Feed : Resource
-    {
-        public string FeedId { get; set; }
-
-        public string Title { get; set; }
-
-        public DateTimeOffset? Updated { get; set; }
-
-        public float Velocity { get; set; }
-
-        public List<string> Topics { get; private set; } = new List<string>();
-
-        public int Subscribers { get; set; }
-
-        public string Website { get; set; }
-
-        public bool Partial { get; set; }
-
-        public int EstimatedEngagement { get; set; }
-
-        public string IconUrl { get; set; }
-
-        public string CoverUrl { get; set; }
-
-        public string VisualUrl { get; set; }
-
-        public int NumReadEntriesPastMonth { get; set; }
-
-        public int NumLongReadEntriesPastMonth { get; set; }
-
-        public int TotalReadingTimePastMonth { get; set; }
-
-        public int NumTaggedEntriesPastMonth { get; set; }
-
-        public string Language { get; set; }
-
-        public string ContentType { get; set; }
-
-        public string Description { get; set; }
-
-        public string CoverColor { get; set; }
-
-        public string TwitterScreenName { get; set; }
-
-        public int TwitterFollowers { get; set; }
-    }
+    public string? FeedId { get; init; }
+    public string? Title { get; init; }
+    public DateTimeOffset? Updated { get; init; }
+    public float Velocity { get; init; }
+    public List<string> Topics { get; init; } = [];
+    public int Subscribers { get; init; }
+    public string? Website { get; init; }
+    public bool Partial { get; init; }
+    public int EstimatedEngagement { get; init; }
+    public string? IconUrl { get; init; }
+    public string? CoverUrl { get; init; }
+    public string? VisualUrl { get; init; }
+    public int NumReadEntriesPastMonth { get; init; }
+    public int NumLongReadEntriesPastMonth { get; init; }
+    public int TotalReadingTimePastMonth { get; init; }
+    public int NumTaggedEntriesPastMonth { get; init; }
+    public string? Language { get; init; }
+    public string? ContentType { get; init; }
+    public string? Description { get; init; }
+    public string? CoverColor { get; init; }
+    public string? TwitterScreenName { get; init; }
+    public int TwitterFollowers { get; init; }
 }

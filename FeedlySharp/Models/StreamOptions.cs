@@ -1,38 +1,50 @@
-﻿namespace FeedlySharp.Models
+using System.Text;
+
+namespace FeedlySharp.Models;
+
+/// <summary>
+/// Options for stream queries
+/// </summary>
+public record StreamOptions
 {
-    public class StreamOptions
+    public string? StreamId { get; init; }
+    public int Count { get; init; } = 20;
+    public RankType Ranked { get; init; } = RankType.Newest;
+    public bool UnreadOnly { get; init; } = false;
+    public string? Continuation { get; init; }
+
+    public override string ToString()
     {
-        public string StreamId { get; set; }
-
-        public int Count { get; set; } = 20;
-
-        public RankType Ranked { get; set; } = RankType.Newest;
-
-        public bool UnreadOnly { get; set; } = false;
-
-        public string Continuation { get; set; }
-
-        public override string ToString()
+        var query = new StringBuilder("?");
+        var hasParams = false;
+        
+        if (!string.IsNullOrEmpty(StreamId))
         {
-            var query =
-                   $"?{nameof(StreamId).ToLower()}={StreamId}" +
-                   $"&{nameof(Count).ToLower()}={Count}" +
-                   $"&{nameof(Ranked).ToLower()}={Ranked.ToString().ToLower()}" +
-                   $"&{nameof(UnreadOnly).ToLower()}={UnreadOnly.ToString().ToLower()}";
-
-            if (string.IsNullOrEmpty(Continuation))
-            {
-                return query;
-            }
-
-            return query + $"&{nameof(Continuation).ToLower()}={Continuation}";
+            query.Append($"{nameof(StreamId).ToLowerInvariant()}={Uri.EscapeDataString(StreamId)}");
+            hasParams = true;
         }
-    }
+        
+        if (hasParams)
+            query.Append('&');
+        query.Append($"{nameof(Count).ToLowerInvariant()}={Count}");
+        query.Append($"&{nameof(Ranked).ToLowerInvariant()}={Ranked.ToString().ToLowerInvariant()}");
+        query.Append($"&{nameof(UnreadOnly).ToLowerInvariant()}={UnreadOnly.ToString().ToLowerInvariant()}");
 
-    public enum RankType
-    {
-        Newest,
-        Oldest,
-        Engagement
+        if (!string.IsNullOrEmpty(Continuation))
+        {
+            query.Append($"&{nameof(Continuation).ToLowerInvariant()}={Uri.EscapeDataString(Continuation)}");
+        }
+
+        return query.ToString();
     }
+}
+
+/// <summary>
+/// Ranking type for stream ordering
+/// </summary>
+public enum RankType
+{
+    Newest,
+    Oldest,
+    Engagement
 }

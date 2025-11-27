@@ -1,17 +1,19 @@
-﻿using System;
-using System.Runtime.Serialization;
+namespace FeedlySharp.Models;
 
-namespace FeedlySharp.Models
+/// <summary>
+/// Exception thrown when Feedly API returns an error
+/// </summary>
+public class FeedlyException : Exception
 {
-    [Serializable]
-    public class FeedlyException : Exception
-    {
-        public FeedlyException(Error error) : base(error.ToString())
-        {
-        }
+    public Error Error { get; }
 
-        protected FeedlyException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+    public FeedlyException(Error error) : base(error.ToString())
+    {
+        Error = error;
+    }
+
+    public FeedlyException(Error error, Exception innerException) : base(error.ToString(), innerException)
+    {
+        Error = error;
     }
 }
